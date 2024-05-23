@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+    	<h:outputStylesheet library="biblioteca" name="theme.css" />
+    </h:head>
+
+    <h:body>
+    
+    <p:sidebar widgetVar="sidebar">
+        <h3>Left Sidebar</h3>
+    </p:sidebar>
+    
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+	    <div style="display: flex; align-items: center; gap: 10px;">
+	    	<p:commandButton icon="pi pi-align-justify" type="button" onclick="PF('sidebar').show()" styleClass="mr-2" style="padding: 0 !important;" />
+    		<h1>Biblioteca</h1>
+	    </div>
+	    
+	    <div style="display: flex; align-items: center; gap: 10px;">
+	    	<p:button value="Cadastrar" />
+	    	<p:button value="Entrar" styleClass="ui-button-outlined" />
+	    </div>
+    	
+    	
+    </div>
+    
+    </h:body>
+</html>
