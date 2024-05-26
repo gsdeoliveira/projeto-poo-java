@@ -8,24 +8,62 @@
     </h:head>
 
     <h:body>
-    
-    <p:sidebar widgetVar="sidebar">
-        <h3>Left Sidebar</h3>
+
+	<p:sidebar widgetVar="sidebar">
+        <h1>Biblioteca</h1>
     </p:sidebar>
     
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-	    <div style="display: flex; align-items: center; gap: 10px;">
-	    	<p:commandButton icon="pi pi-align-justify" type="button" onclick="PF('sidebar').show()" styleClass="mr-2" style="padding: 0 !important;" />
-    		<h1>Biblioteca</h1>
+    
+    
+    <h:form>
+	    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+		    <div style="display: flex; align-items: center; gap: 10px;">
+		    	<p:commandButton icon="pi pi-align-justify" type="button" onclick="PF('sidebar').show()" styleClass="mr-2" style="background: none; color: white;" />
+	    		<h1>Biblioteca</h1>
+		    </div>
+	
+			<p:inputText id="search" value="#{homeBean.searchValue}" required="true"
+				label="Procure por um livro, autor ou categoria" placeholder="Procure por um livro, autor ou categoria..." style="width: 50%;">
+				<f:validateLength minimum="2" />
+				<p:ajax event="keyup" listener="#{homeBean.searchChange}"/>
+			</p:inputText>
+	
+			<div style="display: flex; align-items: center; gap: 10px;">
+		    	<p:button value="Cadastrar" />
+		    	<p:button value="Entrar" styleClass="ui-button-outlined" />
+		    </div>
+	    	
+	    	
 	    </div>
-	    
-	    <div style="display: flex; align-items: center; gap: 10px;">
-	    	<p:button value="Cadastrar" />
-	    	<p:button value="Entrar" styleClass="ui-button-outlined" />
-	    </div>
-    	
-    	
-    </div>
+    </h:form>
+    
+<!--     <p:carousel value="#{carouselView.products}" var="product" numVisible="3" numScroll="3"
+                    responsiveOptions="#{carouselView.responsiveOptions}">
+            <f:facet name="header">
+                <h5>Basic</h5>
+            </f:facet>
+            <div class="product-item">
+                <div class="product-item-content">
+                    <div class="mb-3">
+                        <p:graphicImage name="demo/images/product/#{product.image}" styleClass="product-image"/>
+                    </div>
+                    <div>
+                        <h4 class="mb-1">#{product.name}</h4>
+                        <h6 class="mt-0 mb-3">
+                            <h:outputText value="#{product.price}">
+                                <f:convertNumber type="currency" pattern="¤#0" currencySymbol="$" />
+                            </h:outputText>
+                        </h6>
+                        <span class="product-badge status-#{product.inventoryStatus.name().toLowerCase()}">#{product.inventoryStatus.text}</span>
+                        <div class="mt-5">
+                            <p:commandButton type="button" icon="pi pi-search" styleClass="rounded-button mr-2" />
+                            <p:commandButton type="button" icon="pi pi-star" styleClass="ui-button-success rounded-button mr-2" />
+                            <p:commandButton type="button" icon="pi pi-cog" styleClass="ui-button-help rounded-button" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p:carousel> -->
     
     </h:body>
 </html>
