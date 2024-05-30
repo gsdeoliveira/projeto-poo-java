@@ -13,8 +13,6 @@
         <h1>Biblioteca</h1>
     </p:sidebar>
     
-    
-    
     <h:form>
 	    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
 		    <div style="display: flex; align-items: center; gap: 10px;">
@@ -29,41 +27,77 @@
 			</p:inputText>
 	
 			<div style="display: flex; align-items: center; gap: 10px;">
-		    	<p:button value="Cadastrar" />
-		    	<p:button value="Entrar" styleClass="ui-button-outlined" />
+		    	<p:commandButton value="Cadastrar" onclick="PF('dlgCadastrar').show();" />
+		    	<p:commandButton value="Entrar" styleClass="ui-button-outlined" onclick="PF('dlgLogin').show();" />
 		    </div>
-	    	
 	    	
 	    </div>
     </h:form>
     
-<!--     <p:carousel value="#{carouselView.products}" var="product" numVisible="3" numScroll="3"
-                    responsiveOptions="#{carouselView.responsiveOptions}">
-            <f:facet name="header">
-                <h5>Basic</h5>
-            </f:facet>
-            <div class="product-item">
-                <div class="product-item-content">
-                    <div class="mb-3">
-                        <p:graphicImage name="demo/images/product/#{product.image}" styleClass="product-image"/>
-                    </div>
-                    <div>
-                        <h4 class="mb-1">#{product.name}</h4>
-                        <h6 class="mt-0 mb-3">
-                            <h:outputText value="#{product.price}">
-                                <f:convertNumber type="currency" pattern="¤#0" currencySymbol="$" />
-                            </h:outputText>
-                        </h6>
-                        <span class="product-badge status-#{product.inventoryStatus.name().toLowerCase()}">#{product.inventoryStatus.text}</span>
-                        <div class="mt-5">
-                            <p:commandButton type="button" icon="pi pi-search" styleClass="rounded-button mr-2" />
-                            <p:commandButton type="button" icon="pi pi-star" styleClass="ui-button-success rounded-button mr-2" />
-                            <p:commandButton type="button" icon="pi pi-cog" styleClass="ui-button-help rounded-button" />
-                        </div>
-                    </div>
-                </div>
+    <!-- Diálogo de Login -->
+    <p:dialog header="Entrar" widgetVar="dlgLogin" modal="true" draggable="false" resizable="false">
+        <h:form>
+            <div style="display: flex; flex-direction: column; gap: 15px;" >
+	            <div style="display: flex; gap: 10px; justify-content:space-between; align-items: center;">
+	                <h:outputLabel for="username" value="Usuário:" />
+	                <p:inputText id="username" value="#{loginBean.username}" required="true" label="Usuário" placeholder="Seu usuário" />
+	            </div>
+                
+                <div style="display: flex; gap: 10px; justify-content:space-between; align-items: center;">
+	                <h:outputLabel for="password" value="Senha:" />
+	                <p:password id="password" value="#{loginBean.password}" required="true" label="Senha" placeholder="Sua senha" />
+	            </div>
+                
+                <p:commandButton value="Entrar" action="#{loginBean.login}" update="@form" style="width: 100%;" />
+                
+                <div style="display: flex; gap: 20px; align-items: center;">
+		            <h:outputLabel value="Não tem uma conta?" />
+		            <p:commandLink value="Cadastrar" style="text-decoration: underline" onclick="PF('dlgLogin').hide(); PF('dlgCadastrar').show();" /> 
+	        </div>
             </div>
-        </p:carousel> -->
+        </h:form>
+    </p:dialog>
     
+    <!-- Diálogo de Cadastro -->
+    <p:dialog header="Cadastrar" widgetVar="dlgCadastrar" modal="true" draggable="false" resizable="false">
+    <h:form>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+	        <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+	            <h:outputLabel for="newUsername" value="Usuário:" />
+	            <p:inputText id="newUsername" value="#{registerBean.username}" required="true" label="Usuário" placeholder="Digite o nome de usuário" />
+	        </div>
+            
+            <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+	            <h:outputLabel for="newEmail" value="Email:" />
+	            <p:inputText id="newEmail" value="#{registerBean.email}" required="true" label="Email" placeholder="Digite o endereço de email" />
+	        </div>
+	        
+	        <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+	            <h:outputLabel for="newTelefone" value="Telefone:" />
+	            <p:inputText id="newTelefone" value="#{registerBean.telefone}" required="true" label="Telefone" placeholder="Digite o número de telefone" />
+	        </div>
+            
+            <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+	            <h:outputLabel for="newPassword" value="Senha:" />
+	            <p:password id="newPassword" value="#{registerBean.password}" required="true" label="Senha" placeholder="Digite a senha" />
+            </div>
+            
+            <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+	            <h:outputLabel for="confirmPassword" value="Confirmar Senha:" />
+	            <p:password id="confirmPassword" value="#{registerBean.confirmPassword}" required="true" label="Confirmar Senha" placeholder="Confirme a senha" />
+            </div>
+            
+            <p:commandButton value="Cadastrar" action="#{registerBean.register}" update="@form" colspan="2" />
+            
+            <div style="display: flex; gap: 20px; align-items: center;">
+	            <h:outputLabel value="Já tem uma conta?" />
+	            <p:commandLink value="Entrar" style="text-decoration: underline" onclick="PF('dlgLogin').show(); PF('dlgCadastrar').hide();" /> 
+	        </div>
+        </div>
+    </h:form>
+</p:dialog>
+    
+
+
     </h:body>
 </html>

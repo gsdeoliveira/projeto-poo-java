@@ -6,7 +6,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1522:xe" />
 			<property name="javax.persistence.jdbc.user" value="SYSTEM" />
 			<property name="javax.persistence.jdbc.password" value="12345678" />
 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />		
