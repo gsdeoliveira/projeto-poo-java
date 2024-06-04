@@ -1,15 +1,11 @@
 package model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -37,13 +33,9 @@ public class Livro {
     @ManyToOne
     private Autor autor;
     
-    @ManyToMany
-    @JoinTable(
-        name = "Livro_Categoria", // Nome da tabela intermediária
-        joinColumns = @JoinColumn(name = "livro_id"), // Nome da chave estrangeira de Livro
-        inverseJoinColumns = @JoinColumn(name = "categoria_id") // Nome da chave estrangeira de Categoria
-    )
-    private List<Categoria> categorias;
+    @ManyToOne
+    @JoinColumn(name = "genero")
+    private Genero genero;
 
     
     // getters e setters
@@ -103,12 +95,12 @@ public class Livro {
 		this.autor = autor;
 	}
 
-	public List<Categoria> getCategorias() {
-		return categorias;
+	public Genero getGenero() {
+		return genero;
 	}
 
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
+	public void setGenero(Genero genero) {
+		this.genero = genero;
 	}
     
 }

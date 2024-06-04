@@ -1,103 +1,204 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-    	<h:outputStylesheet library="biblioteca" name="theme.css" />
+        <h:outputStylesheet library="biblioteca" name="theme.css" />
+        <style>
+
+        </style>
     </h:head>
 
     <h:body>
 
-	<p:sidebar widgetVar="sidebar">
-        <h1>Biblioteca</h1>
-    </p:sidebar>
-    
-    <h:form>
-	    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
-		    <div style="display: flex; align-items: center; gap: 10px;">
-		    	<p:commandButton icon="pi pi-align-justify" type="button" onclick="PF('sidebar').show()" styleClass="mr-2" style="background: none; color: white;" />
-	    		<h1>Biblioteca</h1>
-		    </div>
-	
-			<p:inputText id="search" value="#{homeBean.searchValue}" required="true"
-				label="Procure por um livro, autor ou categoria" placeholder="Procure por um livro, autor ou categoria..." style="width: 50%;">
-				<f:validateLength minimum="2" />
-				<p:ajax event="keyup" listener="#{homeBean.searchChange}"/>
-			</p:inputText>
-	
-			<div style="display: flex; align-items: center; gap: 10px;">
-		    	<p:commandButton value="Cadastrar" onclick="PF('dlgCadastrar').show();" />
-		    	<p:commandButton value="Entrar" styleClass="ui-button-outlined" onclick="PF('dlgLogin').show();" />
-		    </div>
-	    	
-	    </div>
-    </h:form>
-    
-    <!-- Diálogo de Login -->
-    <p:dialog header="Entrar" widgetVar="dlgLogin" modal="true" draggable="false" resizable="false">
-        <h:form>
-            <div style="display: flex; flex-direction: column; gap: 15px;" >
-	            <div style="display: flex; gap: 10px; justify-content:space-between; align-items: center;">
-	                <h:outputLabel for="username" value="Usuário:" />
-	                <p:inputText id="username" value="#{loginBean.username}" required="true" label="Usuário" placeholder="Seu usuário" />
-	            </div>
-                
-                <div style="display: flex; gap: 10px; justify-content:space-between; align-items: center;">
-	                <h:outputLabel for="password" value="Senha:" />
-	                <p:password id="password" value="#{loginBean.password}" required="true" label="Senha" placeholder="Sua senha" />
-	            </div>
-                
-                <p:commandButton value="Entrar" action="#{loginBean.login}" update="@form" style="width: 100%;" />
-                
-                <div style="display: flex; gap: 20px; align-items: center;">
-		            <h:outputLabel value="Não tem uma conta?" />
-		            <p:commandLink value="Cadastrar" style="text-decoration: underline" onclick="PF('dlgLogin').hide(); PF('dlgCadastrar').show();" /> 
-	        </div>
-            </div>
-        </h:form>
-    </p:dialog>
-    
-    <!-- Diálogo de Cadastro -->
-    <p:dialog header="Cadastrar" widgetVar="dlgCadastrar" modal="true" draggable="false" resizable="false">
-    <h:form>
-        <div style="display: flex; flex-direction: column; gap: 15px;">
-	        <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
-	            <h:outputLabel for="newUsername" value="Usuário:" />
-	            <p:inputText id="newUsername" value="#{registerBean.username}" required="true" label="Usuário" placeholder="Digite o nome de usuário" />
-	        </div>
-            
-            <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
-	            <h:outputLabel for="newEmail" value="Email:" />
-	            <p:inputText id="newEmail" value="#{registerBean.email}" required="true" label="Email" placeholder="Digite o endereço de email" />
-	        </div>
-	        
-	        <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
-	            <h:outputLabel for="newTelefone" value="Telefone:" />
-	            <p:inputText id="newTelefone" value="#{registerBean.telefone}" required="true" label="Telefone" placeholder="Digite o número de telefone" />
-	        </div>
-            
-            <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
-	            <h:outputLabel for="newPassword" value="Senha:" />
-	            <p:password id="newPassword" value="#{registerBean.password}" required="true" label="Senha" placeholder="Digite a senha" />
-            </div>
-            
-            <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
-	            <h:outputLabel for="confirmPassword" value="Confirmar Senha:" />
-	            <p:password id="confirmPassword" value="#{registerBean.confirmPassword}" required="true" label="Confirmar Senha" placeholder="Confirme a senha" />
-            </div>
-            
-            <p:commandButton value="Cadastrar" action="#{registerBean.register}" update="@form" colspan="2" />
-            
-            <div style="display: flex; gap: 20px; align-items: center;">
-	            <h:outputLabel value="Já tem uma conta?" />
-	            <p:commandLink value="Entrar" style="text-decoration: underline" onclick="PF('dlgLogin').show(); PF('dlgCadastrar').hide();" /> 
-	        </div>
-        </div>
-    </h:form>
-</p:dialog>
-    
+        <p:sidebar widgetVar="sidebar">
+            <h1>Biblioteca</h1>
+        </p:sidebar>
 
+        <h:form id="mainForm">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="position: absolute; z-index: 100; width: 90%; top: 20px; left: 50%; transform: translateX(-50%);" />
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <p:commandButton icon="pi pi-align-justify" type="button" onclick="PF('sidebar').show()" styleClass="mr-2" style="background: none; color: white;" />
+                    <h1>Biblioteca</h1>
+                </div>
+
+                <p:inputText id="search" value="#{homeBean.searchValue}"
+                    label="Procure por um livro, autor ou categoria" placeholder="Procure por um livro, autor ou categoria..." style="width: 50%;">
+                    <p:ajax event="keyup" listener="#{homeBean.searchChange}"/>
+                </p:inputText>
+
+                <div style="display: flex; align-items: center; gap: 10px;" id="topButtons">
+                    <h:panelGroup rendered="#{!loginBean.loggedIn}" id="panelButtons" style="display: flex; align-items: center; gap: 10px;">
+                        <p:commandButton value="Cadastrar" onclick="PF('dlgCadastrar').show();" />
+                        <p:commandButton value="Entrar" styleClass="ui-button-outlined" onclick="PF('dlgLogin').show();" />
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{loginBean.loggedIn}" id="panelButtonsExit" style="display: flex; gap: 10px; justify-content:space-between; align-items: center;">
+                    	<h:panelGroup>
+                    		<p:commandButton value="Gerenciar" id="gerenciarButton" type="button" icon="pi pi-wrench" rendered="#{loginBean.admin}" />
+								<p:menu overlay="true" trigger="gerenciarButton" my="left top" style="margin-top: 15px;"
+									at="left bottom">
+										<p:menuitem value="Adicionar novo livro" onclick="PF('dlgNewBook').show();"
+											update="messages" ajax="true" icon="pi pi-plus" />
+								</p:menu>
+					</h:panelGroup>
+                    	
+                    	<p:commandButton value="Gerenciar" icon="pi pi-user" action="#{loginBean.logout}" update="@form" rendered="#{!loginBean.admin}" />
+                        <p:commandButton value="Sair" action="#{loginBean.logout}" styleClass="ui-button-outlined" update="@form" />
+                    </h:panelGroup>
+                </div>
+
+            </div>
+
+		<h:panelGroup id="main">
+			<c:forEach items="#{homeBean.generos}" var="item">
+				<p:carousel value="#{item.livros}" var="livro"
+					numVisible="5" numScroll="1">
+					
+					<f:facet name="header">
+						<h5>#{item.nome}</h5>
+					</f:facet>
+					
+					<div class="product-item">
+						<div class="product-item-content">
+							<div class="mb-3">
+								<p:graphicImage name="demo/images/product/#{product.image}" alt="#{livro.titulo}" />
+							</div>
+						</div>
+					</div>
+					
+				</p:carousel>
+			</c:forEach>
+		</h:panelGroup>
+	</h:form>
+
+        <!-- Diálogo de Login -->
+        <p:dialog header="Entrar" widgetVar="dlgLogin" modal="true" draggable="false" resizable="false">
+            <h:form id="loginForm">
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; gap: 10px; justify-content:space-between; align-items: center;">
+                        <h:outputLabel for="email" value="Email:" />
+                        <p:inputText id="email" value="#{loginBean.email}" required="true" label="Usuário" placeholder="Seu email" />
+                    </div>
+
+                    <div style="display: flex; gap: 10px; justify-content:space-between; align-items: center;">
+                        <h:outputLabel for="password" value="Senha:" />
+                        <p:password id="password" value="#{loginBean.password}" required="true" label="Senha" placeholder="Sua senha" />
+                    </div>
+
+                    <p:commandButton value="Entrar" action="#{loginBean.login}" update=":mainForm:messages :mainForm:panelButtons :mainForm:panelButtonsExit @form" ajax="false" style="width: 100%;" />
+
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                        <h:outputLabel value="Não tem uma conta?" />
+                        <p:commandLink value="Cadastrar" style="text-decoration: underline" onclick="PF('dlgLogin').hide(); PF('dlgCadastrar').show();" /> 
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+
+        <!-- Diálogo de Cadastro -->
+        <p:dialog header="Cadastrar" widgetVar="dlgCadastrar" modal="true" draggable="false" resizable="false">
+            <h:form id="registerForm">
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+                        <h:outputLabel for="newUsername" value="Usuário:" />
+                        <p:inputText id="newUsername" value="#{registerBean.username}" required="true" label="Usuário" placeholder="Digite o nome de usuário" />
+                    </div>
+
+                    <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+                        <h:outputLabel for="newEmail" value="Email:" />
+                        <p:inputText id="newEmail" value="#{registerBean.email}" required="true" label="Email" type="email" placeholder="Digite o endereço de email" />
+                    </div>
+
+                    <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+                        <h:outputLabel for="newTelefone" value="Telefone:" />
+                        <p:inputText id="newTelefone" value="#{registerBean.telefone}" required="true" label="Telefone" placeholder="Digite o número de telefone" />
+                    </div>
+
+                    <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+                        <h:outputLabel for="newPassword" value="Senha:" />
+                        <p:password id="newPassword" value="#{registerBean.password}" required="true" label="Senha" placeholder="Digite a senha" />
+                    </div>
+
+                    <div style="display: flex; gap: 50px; justify-content:space-between; align-items: center;">
+                        <h:outputLabel for="confirmPassword" value="Confirmar Senha:" />
+                        <p:password id="confirmPassword" value="#{registerBean.confirmPassword}" required="true" label="Confirmar Senha" placeholder="Confirme a senha" />
+                    </div>
+
+                    <p:commandButton value="Cadastrar" action="#{registerBean.register}" update=":mainForm:messages" style="width: 100%;" />
+
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                        <h:outputLabel value="Já tem uma conta?" />
+                        <p:commandLink value="Entrar" style="text-decoration: underline" onclick="PF('dlgLogin').show(); PF('dlgCadastrar').hide();" /> 
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+        
+        <!-- Dialog novo livro -->
+        <p:dialog header="Novo Livro" widgetVar="dlgNewBook" modal="true" draggable="false" resizable="false">
+            <h:form id="newBookForm">
+                <div style="display: flex; gap: 20px;">
+	                <div style="display: flex; flex-direction: column; gap: 15px;">
+	                
+	                    <div style="display: flex; flex-direction: column; gap: 10px; justify-content:space-between;">
+	                        <h:outputLabel for="titulo" value="Titulo:" />
+	                        <p:inputText id="titulo" value="#{bookBean.titulo}" required="true" label="título" placeholder="Título do livro" />
+	                    </div>
+	
+	                    <div style="display: flex; flex-direction: column; gap: 10px; justify-content:space-between;">
+	                        <h:outputLabel for="isbn" value="Isbn:" />
+	                        <p:inputText id="isbn" value="#{bookBean.isbn}" required="true" label="isbn" placeholder="Isbn" />
+	                    </div>
+	                    
+	                    <div style="display: flex; flex-direction: column; gap: 10px; justify-content:space-between;">
+	                        <h:outputLabel for="dataPublicacao" value="Data de publicação:" />
+	                        <p:datePicker id="dataPublicacao" value="#{bookBean.dataPublicacao}" placeholder="Selecione uma data" />
+	                    </div>
+
+						<div
+							style="display: flex; flex-direction: column; gap: 10px; justify-content: space-between;">
+							<h:outputLabel for="editora" value="Editora:" />
+							<p:inputText id="editora" value="#{bookBean.editora}"
+								required="true" label="Editora" placeholder="Editora" />
+						</div>
+
+				</div>
+                
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                
+                	<div style="display: flex; flex-direction: column; gap: 10px; justify-content: space-between;">
+                	
+                		<h:outputLabel for="genero" value="Gênero:" />
+						<p:selectOneMenu id="genero"
+							value="#{bookBean.generoSelecionado}">
+							<f:selectItem itemLabel="Selecione uma categoria" itemValue="" />
+                    		<f:selectItems value="#{bookBean.generos}" var="genero" itemLabel="#{genero.nome}" itemValue="#{genero.id}" />
+						</p:selectOneMenu>
+
+					</div>
+					
+					<div style="display: flex; flex-direction: column; gap: 10px; justify-content: space-between;">
+                		<h:outputLabel for="autor" value="Autor(a):" />
+						<p:inputText id="autor" value="#{bookBean.autor}"
+							required="true" label="Autor(a)" placeholder="Autor(a)" />
+					</div>
+	
+					<div
+						style="display: flex; flex-direction: column; gap: 10px; justify-content: space-between;">
+						<h:outputLabel for="qtdDisponivel" value="Quantidade disponível:" />
+						<p:inputNumber id="qtdDisponivel" value="#{bookBean.qtdDisponivel}" required="true"
+							placeholder="Qtd. Disponível" minValue="0" decimalPlaces="0" />
+					</div>
+
+				</div>
+
+                </div>
+				<p:commandButton value="Adicionar" action="#{bookBean.adicionar}" update=":mainForm:messages :mainForm:main :mainForm:panelButtons :mainForm:panelButtonsExit @form" ajax="false" style="width: 100%; margin-top: 20px;" />
+            </h:form>
+        </p:dialog>
 
     </h:body>
 </html>
